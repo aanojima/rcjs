@@ -50,16 +50,16 @@ io.on("connection", function(socket){
   
   socket.on('initialize-application', function(data){
     if (isSocketTypeSet){
-      socket.emit("error", "Controller cannot also be application");
+      socket.emit("connection-error", "already initialized");
       return;
     }
-    if (!data.id){
-      socket.emit("error", "id not defined");
+    if (!data || !data.id){
+      socket.emit("connection-error", "id not defined");
       return;
     }
     var id = data.id;
     if (instances.hasOwnProperty(id)){
-      socket.emit("error", "id already exists");
+      socket.emit("connection-error", "id already exists");
       return;
     }
     var instance = {
@@ -68,33 +68,33 @@ io.on("connection", function(socket){
     };
     instances[id] = instance;
     isSocketTypeSet = true;
-    socket.emit("connection", true);
+    socket.emit("connection-success", true);
   });
   
   socket.on('initialize-controller', function(data){
     if (isSocketTypeSet){
-      socket.emit("error", "Application cannot also be controller");
+      socket.emit("connection-error", "already initialized");
       return;
     }
-    if (!data.id){
-      socket.emit("error", "id not defined");
+    if ( !data || !data.id){
+      socket.emit("connection-error", "id not defined");
       return;
     }
     var instanceId = data.id;
     var instance = instances[instanceId];
     if (!instance){
-      socket.emit("error", "Application doesn't exist");
+      socket.emit("connection-error", "Application doesn't exist");
       return;
     }
-    instance.controllers.append(socket);
+    instance.controllers.push(socket);
     socket.on('controller-event', function(data){
       var application = instances[instanceId].application;
       application.emit("controller-event", data);
     });
     isSocketTypeSet = true;
-    socket.emit("connection", true);
+    socket.emit("connection-success", true);
   });
-  
+
 });
 
 var port = process.env.OPENSHIFT_NODEJS_PORT;
