@@ -50,37 +50,35 @@ io.on("connection", function(socket){
       socket.emit("application-error", "Controller cannot also be application");
       return;
     }
-    isSocketTypeSet = true;
     var id = data.id;
     if (instances.hasOwnProperty(id)){
       socket.emit("application-error", "id already exists");
     } else {
       var instance = {
-        id : id,
         application : socket,
         controllers : []
       };
       instances[id] = instance;
     }
+    isSocketTypeSet = true;
   });
   socket.on('initialize-controller', function(data){
     if (isSocketTypeSet){
       socket.emit("controller-error", "Application cannot also be controller");
       return;
     }
-    isSocketTypeSet = true;
-    socket.id = data.id;
-    var instance = instance[data.id];
-    if (!instance.hasOwnProperty("controllers")){
+    var instanceId = data.id;
+    var instance = instances[instanceId];
+    if (!instance){
       socket.emit("controller-error", "Application doesn't exist");
       return;
     }
     instance.controllers.append(socket);
     socket.on('controller-event', function(data){
-      var id = socket.id;
-      var application = instances[id].application;
+      var application = instances[instanceId].application;
       application.emit("controller-event", data);
     });
+    isSocketTypeSet = true;
   });
 });
 
