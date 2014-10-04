@@ -43,34 +43,47 @@ module.exports.sockets = {};
 var instances = {};
 
 io.on("connection", function(socket){
+  
   console.log(instances);
+  
   var isSocketTypeSet = false;
+  
   socket.on('initialize-application', function(data){
     if (isSocketTypeSet){
-      socket.emit("application-error", "Controller cannot also be application");
+      socket.emit("error", "Controller cannot also be application");
+      return;
+    }
+    if (!data.id){
+      socket.emit("error", "id not defined");
       return;
     }
     var id = data.id;
     if (instances.hasOwnProperty(id)){
-      socket.emit("application-error", "id already exists");
-    } else {
-      var instance = {
-        application : socket,
-        controllers : []
-      };
-      instances[id] = instance;
+      socket.emit("error", "id already exists");
+      return;
     }
+    var instance = {
+      application : socket,
+      controllers : []
+    };
+    instances[id] = instance;
     isSocketTypeSet = true;
+    socket.emit("connection", true);
   });
+  
   socket.on('initialize-controller', function(data){
     if (isSocketTypeSet){
-      socket.emit("controller-error", "Application cannot also be controller");
+      socket.emit("error", "Application cannot also be controller");
+      return;
+    }
+    if (!data.id){
+      socket.emit("error", "id not defined");
       return;
     }
     var instanceId = data.id;
     var instance = instances[instanceId];
     if (!instance){
-      socket.emit("controller-error", "Application doesn't exist");
+      socket.emit("error", "Application doesn't exist");
       return;
     }
     instance.controllers.append(socket);
@@ -79,7 +92,9 @@ io.on("connection", function(socket){
       application.emit("controller-event", data);
     });
     isSocketTypeSet = true;
+    socket.emit("connection", true);
   });
+  
 });
 
 var port = process.env.OPENSHIFT_NODEJS_PORT;
