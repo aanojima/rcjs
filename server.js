@@ -5,9 +5,11 @@
 
 var express = require('express');
 var routes = require('./routes');
+// var application = require('./routes/application');
+// var controller = require('./routes/controller');
 
-var app = module.exports = express.createServer();
-var io = require('socket.io')(app);
+var app = module.exports.app = express.createServer();
+var io = module.exports.io = require('socket.io')(app);
 
 // Configuration
 
@@ -30,19 +32,28 @@ app.configure('production', function(){
   app.use(express.errorHandler());
 });
 
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  return next();
+});
+
 // Socket.IO
 
-// Routes
+// Routes){}
 
 app.get('/', routes.index);
 
+module.exports.sockets = {};
+
 // Create App
 // app.post('/application', application.create);
-// app.postI'/controller', controller.create);
+// Create Controller
+// app.post('/controller', controller.create);
+
 io.on('connection', function(socket){
-  console.log("New connection");
   socket.on('echo', function(data){
-    console.log('echoing ' + data + ' back to client');
     io.emit('echo', data);
   });
 });
