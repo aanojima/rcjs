@@ -6,7 +6,7 @@
 var express = require('express');
 var routes = require('./routes');
 // var application = require('./routes/application');
-// var controller = require('./routes/controller');
+var controller = require('./routes/controller');
 
 var app = module.exports.app = express.createServer();
 var io = module.exports.io = require('socket.io')(app);
@@ -32,16 +32,9 @@ app.configure('production', function(){
   app.use(express.errorHandler());
 });
 
-app.use(function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
-  return next();
-});
-
 // Socket.IO
 
-// Routes){}
+// Routes
 
 app.get('/', routes.index);
 
@@ -50,11 +43,32 @@ module.exports.sockets = {};
 // Create App
 // app.post('/application', application.create);
 // Create Controller
-// app.post('/controller', controller.create);
+app.post('/controller', controller.create);
 
-io.on('connection', function(socket){
-  socket.on('echo', function(data){
-    io.emit('echo', data);
+// io.on('connection', function(socket){
+//   socket.on('echo', function(data){
+//     io.emit('echo', data);
+//   });
+// });
+
+var instances = {};
+
+io.on("connection", function(socket){
+  socket.on('initialize-application', function(data){
+    var id = data.id;
+    var instance = {
+      id : id,
+      application : socket,
+      controllers : []
+    };
+    instances[id] = instance;
+  });
+  socket.on('initialize-controller', function(data){
+    var instance = instance[data.id];
+    instance.controllers.append(socket);
+  });
+  socket.on('controller-event', function(data){
+
   });
 });
 
