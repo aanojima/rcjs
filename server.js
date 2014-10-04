@@ -5,8 +5,6 @@
 
 var express = require('express');
 var routes = require('./routes');
-// var application = require('./routes/application');
-var controller = require('./routes/controller');
 
 var app = module.exports.app = express.createServer();
 var io = module.exports.io = require('socket.io')(app);
@@ -37,38 +35,52 @@ app.configure('production', function(){
 // Routes
 
 app.get('/', routes.index);
+app.get('/controller', routes.controller);
+app.get('/application', routes.application);
 
 module.exports.sockets = {};
-
-// Create App
-// app.post('/application', application.create);
-// Create Controller
-app.post('/controller', controller.create);
-
-// io.on('connection', function(socket){
-//   socket.on('echo', function(data){
-//     io.emit('echo', data);
-//   });
-// });
 
 var instances = {};
 
 io.on("connection", function(socket){
+  console.log(instances);
+  var isSocketTypeSet = false;
   socket.on('initialize-application', function(data){
+    if (isSocketTypeSet){
+      socket.emit("application-error", "Controller cannot also be application");
+      return;
+    }
+    isSocketTypeSet = true;
     var id = data.id;
-    var instance = {
-      id : id,
-      application : socket,
-      controllers : []
-    };
-    instances[id] = instance;
+    if (instances.hasOwnProperty(id)){
+      socket.emit("application-error", "id already exists");
+    } else {
+      var instance = {
+        id : id,
+        application : socket,
+        controllers : []
+      };
+      instances[id] = instance;
+    }
   });
   socket.on('initialize-controller', function(data){
+    if (isSocketTypeSet){
+      socket.emit("controller-error", "Application cannot also be controller");
+      return;
+    }
+    isSocketTypeSet = true;
+    socket.id = data.id;
     var instance = instance[data.id];
+    if (!instance.hasOwnProperty("controllers")){
+      socket.emit("controller-error", "Application doesn't exist");
+      return;
+    }
     instance.controllers.append(socket);
-  });
-  socket.on('controller-event', function(data){
-
+    socket.on('controller-event', function(data){
+      var id = socket.id;
+      var application = instances[id].application;
+      application.emit("controller-event", data);
+    });
   });
 });
 
