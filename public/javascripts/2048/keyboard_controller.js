@@ -4,7 +4,7 @@ $(document).ready(function(){
 		if (isConfigured){
 			return;
 		}
-		var arrowPad = documnet.getElementById("arrow-pad");
+		var arrowPad = document.getElementById("arrow-pad");
 		var gameId = $(".game-id").val();
 		$(".game-id").attr("disabled", true);
 		rc.initController(gameId, function(res){
