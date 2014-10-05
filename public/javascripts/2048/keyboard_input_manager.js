@@ -25,20 +25,22 @@ function KeyboardInputManager() {
           console.log(data.error);
           return;
         }
-        rc.listen("down", function(event){
-          self.emit("move", 2);
-        });
-
-        rc.listen("up", function(event){
-          self.emit("move", 0);
-        });
-
-        rc.listen("left", function(event){
-          self.emit("move", 3);
-        });
-
-        rc.listen("right", function(event){
-          self.emit("move", 1);
+        rc.listen("swipe", function(event){
+          var dx = event.dx;
+          var dy = event.dy;
+          if (dx > dy){
+            if (dx > 0){
+              self.emit("move", 1);
+            } else if (dx < 0) {
+              self.emit("move", 3);
+            }
+          } else if (dy < dx){
+            if (dy > 0){
+              self.emit("move", 0);
+            } else if (dy < 0){
+              self.emit("move", 2);
+            }
+          }
         });
       });
     }

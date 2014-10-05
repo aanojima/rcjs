@@ -4,33 +4,38 @@ $(document).ready(function(){
 		if (isConfigured){
 			return;
 		}
+		var arrowPad = documnet.getElementById("arrow-pad");
+		arrowPad.addEventListener('touchstart', handleTouchStart, false);
+        arrowPad.addEventListener('touchmove', handleTouchMove, false);
 		var gameId = $(".game-id").val();
 		$(".game-id").attr("disabled", true);
 		rc.initController(gameId, function(res){
 			if (!res.success){
 				return;
 			}
-			up.addEventListener("click", function(event){
-				rc.send("up", {});
-			});
-
-			down.addEventListener("click", function(event){
-				rc.send("down", {});
-			});
-
-			left.addEventListener("click", function(event){
-				rc.send("left", {});
-			});
-
-			right.addEventListener("click", function(event){
-				rc.send("right", {});
-			});
 		});
 	});
-		
 
-	var up = document.getElementById("up");
-	var down = document.getElementById("down");
-	var left = document.getElementById("left");
-	var right = document.getElementById("right");
+	function handleTouchStart(evt) {
+        xDown = evt.touches[0].pageX;
+        yDown = evt.touches[0].pageY;
+    };
+
+    function handleTouchMove(evt) {
+        if ( ! xDown || ! yDown ) {
+            return;
+        }
+
+        var xUp = evt.touches[0].pageX;
+        var yUp = evt.touches[0].pageY;
+
+        var xDiff = xUp - xDown;
+        var yDiff = -1* (yUp - yDown);
+
+        rc.send("swipe", { dx : xDiff, dy : yDiff });
+
+        /* reset values */
+        xDown = null;
+        yDown = null;
+    };
 });
