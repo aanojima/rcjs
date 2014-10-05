@@ -12,7 +12,7 @@ body {
 #welcome{
 	position:absolute;
 	top: 55px;
-	font: 30px "Poiret One", Helvetica, Arial, sans-serif;
+	font: 32px "Poiret One", Helvetica, Arial, sans-serif;
 	color:white;
 }
 
@@ -27,7 +27,7 @@ body {
 	position:absolute;
 	opacity: .8;
 	top: 300px;
-	left: 30%;
+	left: 32%;
 	width: 500px;
 	font: 24px "Poiret One", Helvetica, Arial, sans-serif;
 	color: white;
