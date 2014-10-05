@@ -12,10 +12,10 @@ $(document).ready(function(){
 	$("div")
 	.mouseover(function(){
 		var selectID = '#' + $(this).attr('id')
-		$(selectID).addclass("selected");
+		$(selectID).addClass("selected");
 	})
 	.mouseleave(function(){
 		var selectID = '#' + $(this).attr('id')
-		$(selectID).removeclass("selected");
+		$(selectID).removeClass("selected");
 	});
 });
