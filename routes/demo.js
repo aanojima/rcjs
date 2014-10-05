@@ -1,5 +1,6 @@
 exports.all = function(req,res){
-	res.send("All Demos");
+	res.render('demo');
+
 }
 
 exports.loadApp = function(req,res){
