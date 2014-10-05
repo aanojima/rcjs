@@ -1,0 +1,36 @@
+body {
+	width: 100%;
+	height: 100%;
+	font: 14px "Poiret One", Helvetica, Arial, sans-serif;
+	background-color: #3AA5FC;
+}
+
+h1{
+	color: white;
+	font: 88px "Poiret One", Helvetica, Arial, sans-serif;
+
+}
+
+.col_1{
+	position: absolute;
+	margin: 0px 10px;
+}
+
+#title{
+	position: absolute;
+	width: 400px;
+	left: 6%;
+	right: auto;
+	/*top: 10px;*/
+}
+
+#demo2048{
+	position: absolute;
+	background: url("http://localhost:8000/assets/2048.png");
+	background-size: contain;
+	width: 160px;
+	height: 160px;
+	top: 180px;
+	left: 10%;
+	right: auto;
+}
