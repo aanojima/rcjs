@@ -115,6 +115,7 @@ io.on("connection", function(socket){
 
     // Listen for Controller Inputs
     socket.on('controller-event', function(data){
+      data.controllerId = controllerId;
       instance.application.emit("controller-event", data);
     });
 
