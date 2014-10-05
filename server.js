@@ -12,7 +12,8 @@ var io = module.exports.io = require('socket.io')(app);
 // Configuration
 
 app.configure(function(){
-	app.use(express.cookieParser());
+	app.use(
+    express.cookieParser());
     app.use(express.session({secret: '1234567890QWERTY'}));
     app.set('views', __dirname + '/views');
     app.set('view engine', 'ejs');
@@ -20,6 +21,9 @@ app.configure(function(){
     app.use(express.methodOverride());
     app.use(app.router);
     app.use(express.static(__dirname + '/public'));
+    app.use(function(req,res,next){
+      res.header('Access-Control-Allow-Origin', '*');
+    });
 });
 
 app.configure('development', function(){
