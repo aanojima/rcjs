@@ -30,16 +30,12 @@ app.configure('production', function(){
   app.use(express.errorHandler());
 });
 
-// Socket.IO
-
 // Routes
-
 app.get('/', routes.index);
 app.get('/controller', routes.controller);
 app.get('/application', routes.application);
 
-module.exports.sockets = {};
-
+// Socket.IO
 var instances = {};
 
 io.on("connection", function(socket){
@@ -48,7 +44,10 @@ io.on("connection", function(socket){
   
   var isSocketTypeSet = false;
   
+  // Creating a New Application
   socket.on('initialize-application', function(data){
+
+    // Safe-Checking
     if (isSocketTypeSet){
       socket.emit("connection-error", "already initialized");
       return;
@@ -62,16 +61,34 @@ io.on("connection", function(socket){
       socket.emit("connection-error", "id already exists");
       return;
     }
+
+    // Remember the Application
     var instance = {
       application : socket,
-      controllers : []
+      controllers : {},
+      _numControllers : 0
     };
     instances[id] = instance;
+
+    // Dereference Application and Alert All of its Controllers
+    socket.on('disconnect', function(){
+      for (client in instance.controllers){
+        instance.controllers[client].emit('application-disconnect', true);
+      }
+      delete instances[id];
+    });
+
+    // Prevent Future Initialization
     isSocketTypeSet = true;
+
+    // Successful Feedback to Client
     socket.emit("connection-success", true);
   });
   
+  // Creating a New Controller
   socket.on('initialize-controller', function(data){
+
+    // Safe-Checking
     if (isSocketTypeSet){
       socket.emit("connection-error", "already initialized");
       return;
@@ -86,12 +103,27 @@ io.on("connection", function(socket){
       socket.emit("connection-error", "Application doesn't exist");
       return;
     }
-    instance.controllers.push(socket);
+
+    // Remember the Controller
+    var controllerId = instance._numControllers;
+    instance.controllers[controllerId] = socket;
+    instance._numControllers += 1;
+
+    // Listen for Controller Inputs
     socket.on('controller-event', function(data){
-      var application = instances[instanceId].application;
-      application.emit("controller-event", data);
+      instance.application.emit("controller-event", data);
     });
+
+    // Dereference Controller on Disconnect and Alert Application
+    socket.on('disconnect', function(){
+      instance.application.emit("controller-disconnect", { id : controllerId });
+      delete instance.controllers[controllerId];
+    });
+
+    // Prevent Future Initialization
     isSocketTypeSet = true;
+
+    // Successful Feedback to Client
     socket.emit("connection-success", true);
   });
 
