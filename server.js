@@ -110,6 +110,9 @@ io.on("connection", function(socket){
 
     // Listen for Controller Inputs
     socket.on('controller-event', function(data){
+      console.log('controller-event');
+      console.log(instance.application);
+      console.log(data);
       instance.application.emit("controller-event", data);
     });
 
