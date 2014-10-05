@@ -14,26 +14,34 @@ function KeyboardInputManager() {
 
   var self = this;
 
-  rc.initApp("abcdefghij", function(data){
-    if (!data.success){
-      console.log("FAIL");
-      return;
+  $.ajax({
+    type : "POST",
+    url : "http://www.rcjs.me/generate_id",
+    success : function(data){
+      var id = data.id;
+      $(".game-id").text("Game ID: " + id);
+      rc.initApp(id, function(data){
+        if (!data.success){
+          console.log(data.error);
+          return;
+        }
+        rc.listen("down", function(event){
+          self.emit("move", 2);
+        });
+
+        rc.listen("up", function(event){
+          self.emit("move", 0);
+        });
+
+        rc.listen("left", function(event){
+          self.emit("move", 3);
+        });
+
+        rc.listen("right", function(event){
+          self.emit("move", 1);
+        });
+      });
     }
-    rc.listen("down", function(event){
-      self.emit("move", 2);
-    });
-
-    rc.listen("up", function(event){
-      self.emit("move", 0);
-    });
-
-    rc.listen("left", function(event){
-      self.emit("move", 3);
-    });
-
-    rc.listen("right", function(event){
-      self.emit("move", 1);
-    });
   });
 
   this.listen();

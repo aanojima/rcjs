@@ -46,8 +46,6 @@ var instances = module.exports.instances = {};
 
 io.on("connection", function(socket){
   
-  console.log(instances);
-  
   var isSocketTypeSet = false;
   
   // Creating a New Application
@@ -117,9 +115,6 @@ io.on("connection", function(socket){
 
     // Listen for Controller Inputs
     socket.on('controller-event', function(data){
-      console.log('controller-event');
-      console.log(instance.application);
-      console.log(data);
       instance.application.emit("controller-event", data);
     });
 

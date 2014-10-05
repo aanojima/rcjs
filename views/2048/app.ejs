@@ -15,9 +15,11 @@
   <meta name="HandheldFriendly" content="True">
   <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0, maximum-scale=1, user-scalable=no, minimal-ui">
+  <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 </head>
 <body>
   <div class="container">
+    <div class="game-id"></div>
     <div class="heading">
       <h1 class="title">2048</h1>
       <div class="scores-container">
@@ -84,9 +86,7 @@
     Created by <a href="http://gabrielecirulli.com" target="_blank">Gabriele Cirulli.</a> Based on <a href="https://itunes.apple.com/us/app/1024!/id823499224" target="_blank">1024 by Veewo Studio</a> and conceptually similar to <a href="http://asherv.com/threes/" target="_blank">Threes by Asher Vollmer.</a>
     </p>
   </div>
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="/javascripts/2048/rc.events.js"></script>
-  <script src="/javascripts/2048/rc.app.js"></script>
+  <script src="/app.rc.min.js"></script>
   <script src="/javascripts/2048/bind_polyfill.js"></script>
   <script src="/javascripts/2048/classlist_polyfill.js"></script>
   <script src="/javascripts/2048/animframe_polyfill.js"></script>
