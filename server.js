@@ -32,11 +32,10 @@ app.configure('production', function(){
 
 // Routes
 app.get('/', routes.index);
-app.get('/controller', routes.controller);
-app.get('/application', routes.application);
+app.post('/generate_id', routes.generateId);
 
 // Socket.IO
-var instances = {};
+var instances = module.exports.instances = {};
 
 io.on("connection", function(socket){
   
