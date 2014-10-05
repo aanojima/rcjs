@@ -29,13 +29,13 @@ function KeyboardInputManager() {
           console.log(event);
           var dx = event.dx;
           var dy = event.dy;
-          if (dx > dy){
+          if (Math.abs(dx) > Math.abs(dy)){
             if (dx > 0){
               self.emit("move", 1);
             } else if (dx < 0) {
               self.emit("move", 3);
             }
-          } else if (dy < dx){
+          } else if (Math.abs(dy) < Math.abs(dx)){
             if (dy > 0){
               self.emit("move", 0);
             } else if (dy < 0){
