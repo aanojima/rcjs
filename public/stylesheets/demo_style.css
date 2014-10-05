@@ -29,6 +29,15 @@ h1{
 	padding: 15px;
 }
 
+.col_3{
+	position: absolute;
+	top:200px;
+	left: 700px;
+	height: 200px;
+	/*margin: 20px 50px;*/
+	padding: 15px;
+}
+
 #heading{
 	position: absolute;
 	font: 80px "Poiret One", Helvetica, Arial, sans-serif;
@@ -84,6 +93,17 @@ h1{
 	/*right: auto;*/
 }
 
+#pb{
+	position: absolute;
+	background: url("http://localhost:8000/assets/photobooth.png");
+	background-size: contain;
+	width: 140px;
+	height: 140px;
+/*	top: 240px;
+	left: 10%;*/
+	/*right: auto;*/
+}
+
 #desc2048{
 	position: absolute;
 	width: 160px;
@@ -99,6 +119,18 @@ h1{
 #descpong{
 	position: absolute;
 	width: 160px;
+	/*height: 160px;*/
+	top: 180px;
+	/*left: 2%;*/
+	/*right: auto;*/
+	margin: 4px;
+	color: white;
+	font: 30px "Poiret One", Helvetica, Arial, sans-serif;
+}
+
+#descpb{
+	position: absolute;
+	width: 180px;
 	/*height: 160px;*/
 	top: 180px;
 	/*left: 2%;*/
