@@ -5,7 +5,7 @@
 
 var express = require('express');
 var routes = require('./routes');
-var examples = require('./routes/examples');
+var demo = require('./routes/demo');
 
 var app = module.exports.app = express.createServer();
 var io = module.exports.io = require('socket.io')(app);
@@ -37,7 +37,9 @@ app.get('/', routes.index);
 app.post('/generate_id', routes.generateId);
 
 // Examples
-app.get('/examples/*', examples.load);
+app.get('/demo', demo.all);
+app.get('/demo/:app', demo.loadApp);
+app.get('/demo/:app/controller', demo.loadController);
 
 // Socket.IO
 var instances = module.exports.instances = {};
