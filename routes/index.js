@@ -10,6 +10,7 @@ exports.index = function(req, res){
 };
 
 exports.generateId = function(req, res){
+  res.header('Access-Control-Allow-Origin', '*');
   var id;
   while(!id || server.instances.hasOwnProperty(id)){
     id = randomAsciiString(10);

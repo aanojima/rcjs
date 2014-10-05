@@ -5,6 +5,7 @@
 
 var express = require('express');
 var routes = require('./routes');
+var examples = require('./routes/examples');
 
 var app = module.exports.app = express.createServer();
 var io = module.exports.io = require('socket.io')(app);
@@ -12,7 +13,8 @@ var io = module.exports.io = require('socket.io')(app);
 // Configuration
 
 app.configure(function(){
-	app.use(express.cookieParser());
+	app.use(
+    express.cookieParser());
     app.use(express.session({secret: '1234567890QWERTY'}));
     app.set('views', __dirname + '/views');
     app.set('view engine', 'ejs');
@@ -33,6 +35,9 @@ app.configure('production', function(){
 // Routes
 app.get('/', routes.index);
 app.post('/generate_id', routes.generateId);
+
+// Examples
+app.get('/examples/*', examples.load);
 
 // Socket.IO
 var instances = module.exports.instances = {};
@@ -110,6 +115,9 @@ io.on("connection", function(socket){
 
     // Listen for Controller Inputs
     socket.on('controller-event', function(data){
+      console.log('controller-event');
+      console.log(instance.application);
+      console.log(data);
       instance.application.emit("controller-event", data);
     });
 
@@ -123,6 +131,7 @@ io.on("connection", function(socket){
     isSocketTypeSet = true;
 
     // Successful Feedback to Client
+    instance.application.emit("controller-connect", { id : controllerId });
     socket.emit("connection-success", true);
   });
 
