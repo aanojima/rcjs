@@ -49,7 +49,7 @@ body {
     position: relative;
     list-style-type: none;
     float:left;
-    padding:0;margin:4px 34%;
+    padding:0;margin:4px 20%;
     /*border-bottom:solid 4px #fff;*/
 }
 #menu li{
@@ -72,7 +72,7 @@ body {
 {
     height:30px;
     padding-top: 8px;
-    margin: 0 25px;/*used to adjust the distance between each menu item. Now the distance is 20+20=40px.*/
+    margin: 0 15px;/*used to adjust the distance between each menu item. Now the distance is 20+20=40px.*/
     color: #fff;
     font: 18px "Poiret One", Helvetica, Arial, sans-serif;
     text-align: center;

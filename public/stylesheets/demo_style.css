@@ -13,8 +13,20 @@ h1{
 
 .col_1{
 	position: absolute;
-	margin: 0px 10px;
+	top:200px;
+	left: 100px;
+	height: 200px;
+	/*margin: 20px 50px;*/
+	padding: 15px;
+}
 
+.col_2{
+	position: absolute;
+	top:200px;
+	left: 400px;
+	height: 200px;
+	/*margin: 20px 50px;*/
+	padding: 15px;
 }
 
 #heading{
@@ -36,16 +48,18 @@ h1{
 }
 
 .selected{
-	position: absolute;
+/*	position: absolute;
 	width: 200px;
 	height: 260px;
 	padding: 40px 10px;
 	top: 160px;
 	left: 5%;
 	right: auto;
-	margin: 30px 10px;
+	margin: 30px 10px;*/
+	padding: 15px;
+	height: 300px;
 	border-radius: 10px;
-	border: solid 2px;
+	border: solid 3px #4d4d4d;
 }
 
 #demo2048{
@@ -59,11 +73,34 @@ h1{
 	/*right: auto;*/
 }
 
+#pong{
+	position: absolute;
+	background: url("http://localhost:8000/assets/pong.png");
+	background-size: contain;
+	width: 140px;
+	height: 140px;
+/*	top: 240px;
+	left: 10%;*/
+	/*right: auto;*/
+}
+
 #desc2048{
 	position: absolute;
 	width: 160px;
 	/*height: 160px;*/
-	top: 160px;
+	top: 180px;
+	/*left: 2%;*/
+	/*right: auto;*/
+	margin: 4px;
+	color: white;
+	font: 30px "Poiret One", Helvetica, Arial, sans-serif;
+}
+
+#descpong{
+	position: absolute;
+	width: 160px;
+	/*height: 160px;*/
+	top: 180px;
 	/*left: 2%;*/
 	/*right: auto;*/
 	margin: 4px;
