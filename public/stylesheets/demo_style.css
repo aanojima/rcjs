@@ -14,23 +14,59 @@ h1{
 .col_1{
 	position: absolute;
 	margin: 0px 10px;
+
+}
+
+#heading{
+	position: absolute;
+	font: 80px "Poiret One", Helvetica, Arial, sans-serif;
+	color: white;
+	left: 50px;
 }
 
 #title{
 	position: absolute;
-	width: 400px;
-	left: 6%;
+	width: 580px;
+	top: 50px;
+	left: 0px;
 	right: auto;
-	/*top: 10px;*/
+	height: 95px;
+	background-color:rgba(77, 77, 77,0.5);
+	/*background-color: #4d4d4d;*/
+}
+
+.selected{
+	position: absolute;
+	width: 200px;
+	height: 260px;
+	padding: 40px 10px;
+	top: 160px;
+	left: 5%;
+	right: auto;
+	margin: 30px 10px;
+	border-radius: 10px;
+	border: solid 2px;
 }
 
 #demo2048{
 	position: absolute;
 	background: url("http://localhost:8000/assets/2048.png");
 	background-size: contain;
+	width: 140px;
+	height: 140px;
+/*	top: 240px;
+	left: 10%;*/
+	/*right: auto;*/
+}
+
+#desc2048{
+	position: absolute;
 	width: 160px;
-	height: 160px;
-	top: 180px;
-	left: 10%;
-	right: auto;
+	/*height: 160px;*/
+	top: 160px;
+	/*left: 2%;*/
+	/*right: auto;*/
+	margin: 4px;
+	color: white;
+	font: 30px "Poiret One", Helvetica, Arial, sans-serif;
 }
