@@ -5,14 +5,15 @@ $(document).ready(function(){
 			return;
 		}
 		var arrowPad = documnet.getElementById("arrow-pad");
-		arrowPad.addEventListener('touchstart', handleTouchStart, false);
-        arrowPad.addEventListener('touchmove', handleTouchMove, false);
 		var gameId = $(".game-id").val();
 		$(".game-id").attr("disabled", true);
 		rc.initController(gameId, function(res){
 			if (!res.success){
 				return;
 			}
+			alert("Worked");
+			arrowPad.addEventListener('touchstart', handleTouchStart, false);
+        	arrowPad.addEventListener('touchmove', handleTouchMove, false);
 		});
 	});
 

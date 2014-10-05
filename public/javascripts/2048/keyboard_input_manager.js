@@ -26,6 +26,7 @@ function KeyboardInputManager() {
           return;
         }
         rc.listen("swipe", function(event){
+          console.log("swipe");
           var dx = event.dx;
           var dy = event.dy;
           if (dx > dy){
