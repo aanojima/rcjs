@@ -35,7 +35,7 @@ function KeyboardInputManager() {
             } else if (dx < 0) {
               self.emit("move", 3);
             }
-          } else if (Math.abs(dy) < Math.abs(dx)){
+          } else if (Math.abs(dy) > Math.abs(dx)){
             if (dy > 0){
               self.emit("move", 0);
             } else if (dy < 0){
