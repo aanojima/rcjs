@@ -5,6 +5,7 @@
 
 var express = require('express');
 var routes = require('./routes');
+var examples = require('./routes/examples');
 
 var app = module.exports.app = express.createServer();
 var io = module.exports.io = require('socket.io')(app);
@@ -34,6 +35,9 @@ app.configure('production', function(){
 // Routes
 app.get('/', routes.index);
 app.post('/generate_id', routes.generateId);
+
+// Examples
+app.get('/examples/*', examples.load);
 
 // Socket.IO
 var instances = module.exports.instances = {};
@@ -127,6 +131,7 @@ io.on("connection", function(socket){
     isSocketTypeSet = true;
 
     // Successful Feedback to Client
+    instance.application.emit("controller-connect", { id : controllerId });
     socket.emit("connection-success", true);
   });
 
